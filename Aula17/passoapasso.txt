@@ -1,0 +1,66 @@
+1 - CRIAR TABELA E INSERIR MAIS FILMES NA TABELA
+
+CREAT TABLE filmes(
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    imagem_url VARCHAR(255) NOT NULL
+);
+
+INSERT INTO filmes (nome, imagem_url)
+VALUES ('A Procurada Felicidade', 'https://coisasdetv.com/wp-content/uploads/critica-de-hector-e-o-segredo-da-felicidade-um-pouco-branda.jpg%27);
+
+__
+
+2 - abrir terminal powershell
+
+3 - pip install ou py -m pip install ou python -m pip install
+
+4 - instalar dois modulos com os comando acima
+    -flask_sqlalchemy
+    -psycopg2
+
+5 - COPIAR O PROJETO FEITO EM VSCODE
+
+6 - EM APP.PY DELETAR O DICIONARIO DE FILMES
+
+7 - EM APP.PY IMPORTAR OS PACOTES (SQLALCHEMY "from flask_sqlalchemy import SQLAlchemy"
+
+8 - ABAIXO DE 'app = Flask(name)', inserir variaveis abaixo e pegar os dados do elephant e colar nas variáveis...
+    user = 
+    password = 
+    host = 
+    database =
+
+9 - ABAIXO PASSAR:
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{user}:{password}@{host}/{database}' 
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.secret_key = "uma chave secreta bem secreta"
+
+10 - INSERIR ABAIXO:
+    db = SQLAlchemy(app)
+__
+
+#MODELAR CLASSE FILMES -> TABELA FILMES
+
+class Filmes(db.Model):
+    id = db.Collumn(db.Integer, primary_key=True)
+    nome = db.Collumn(db.String(255), nullable=False)
+    imagem_url = db.Collumn(db.String(255), nullable=False)
+
+    def init(self, nome, imagem_url):
+        self.nome = nome
+        self.imagem_url = imagem_url
+
+    @staticmethod
+    def read_all():
+        return Filmes.query.order_by(Filmes.id.asc()).all()
+
+
+11 - INSERIR 'registros = Filmes.read_all()' ACIMA DE 'return'
+
+    @app.route("/read")
+    def read_all():
+
+        registros = Filmes.read_all()
+
+           return render_template("read_all.html", registros=registros)
