@@ -58,7 +58,7 @@ function calcularDano() {
     let resultado = 'Dano: ' + danoTotal + '! ';
 
     if (danoTotal >= vidaInimigo) {
-        resultado += 'Parabéns, você matou o/a ' + inimigoSelecionado;
+        resultado += 'Parabéns, você derrotou o/a ' + inimigoSelecionado;
     } else {
         resultado += 'Não desista!!!Você perdeu apenas uma batalha, tente novamente!';
     }
